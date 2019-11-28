@@ -20,6 +20,27 @@ class ListItemModel {
 		}
 	}
 
+	static async update(item) {
+		const list = await ListItemModel.getAll()
+		const idx = list.findIndex( (c) => {
+			return c.id === item.id
+		})
+		list[idx] = item
+		return new Promise((res, rej) => {
+			fs.writeFile(
+				path.join(__dirname, '..', 'data', 'list-items.json'),
+				JSON.stringify(list),
+				(err, data) => {
+					if (err) {
+						rej(err)
+					} else {
+						res()
+					}
+				}
+			)
+		})
+	}
+
 	async save() {
 		const list = await ListItemModel.getAll()
 		list.push(this.toJSON())
@@ -51,6 +72,13 @@ class ListItemModel {
 					}		
 				}
 			)
+		})
+	}
+
+	static async getOne(id) {
+		let list = await ListItemModel.getAll()
+		return list.find((el) => {
+			return el.id === id 
 		})
 	}
 

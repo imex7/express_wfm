@@ -1,0 +1,30 @@
+<h2>Edit {{list_item.title}}</h2>
+<form action="/list/edit" method="post">
+    <div class="input-field">
+        <input id="title" name="title"
+               value="{{list_item.title}}"
+               type="text" class="validate" required>
+        <label for="title">Title</label>
+        <span class="helper-text" data-error="Enter a title"></span>
+    </div>
+    <div class="input-field">
+        <input id="price" name="price"
+               value="{{list_item.price}}"
+               type="number" class="validate" required min="1">
+        <label for="price">Price</label>
+        <span class="helper-text" data-error="Enter a price"></span>
+    </div>
+    <div class="input-field">
+        <input id="img" name="img"
+               value="{{list_item.img}}"
+               type="text" class="validate" required>
+        <label for="img">URL of image</label>
+        <span class="helper-text" data-error="Enter correct URL"></span>
+    </div>
+
+    <input id="id" name="id"
+           value="{{list_item.id}}"
+           type="hidden">
+
+    <button class="btn btn-primary">Save</button>
+</form>

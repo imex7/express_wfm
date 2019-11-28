@@ -1,3 +1,52 @@
 .nav-wrapper {
 	padding: 0 2rem;
 }
+
+.card {
+	background-color: #d7ccc8;
+	border-radius: .5em;
+	/*display: inline-block;*/
+}
+
+.card-image img {
+	max-width: 300px;
+	height: auto;
+	margin-left: 1em;
+}
+
+.card-title {
+	margin: .5em;
+}
+
+.card-action.mycardaction {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #e0e0e0;
+}
+
+.price {
+	font-size: 2rem;
+	color: brown;
+}
+
+.list-item {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	align-items: center;
+	background-color: antiquewhite;
+}
+
+.list-item h2 {
+	margin-bottom: 2rem;
+}
+
+.list-item img {
+	max-width: 300px !important;
+	height: auto;
+}
+
+.list-item .price.big {
+	font-size: 2.5rem;
+}
