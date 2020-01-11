@@ -28,3 +28,8 @@
 
     <button class="btn btn-primary">Save</button>
 </form>
+
+<form action="/list/remove" method="post">
+    <input type="hidden" name="id" value="{{list_item.id}}">
+    <button type="submit" class="btn red">Delete</button>
+</form>

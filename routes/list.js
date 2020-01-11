@@ -1,11 +1,12 @@
 const router = require('express').Router()
-const ListItemModel = require('../models/list-item-model')
+const ListItem = require('../models/list-item-model')
 
 router.get('/', async (req, res) => {
 	res.removeHeader('X-Powered-By')
 	res.setHeader('Date', new Date().toLocaleString())
 
-	const list = await ListItemModel.getAll()
+	const list = await ListItem.find().populate('userId', 'name')
+	// console.log(list)
 	res.render('list', {
 		isList: true,
 		list
@@ -13,7 +14,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-	const list_item = await ListItemModel.getOne(req.params.id)
+	const list_item = await ListItem.findById(req.params.id)
 	res.render('list-item', {
 		layout: 'main',
 		list_item
@@ -21,7 +22,7 @@ router.get('/:id', async (req, res) => {
 })
 
 router.get('/:id/edit', async (req, res) => {
-	const list_item = await ListItemModel.getOne(req.params.id)
+	const list_item = await ListItem.findByIdAndUpdate(req.params.id)
 	if (!req.query.allow) {
 		return res.redirect('/')
 	} else {
@@ -32,7 +33,17 @@ router.get('/:id/edit', async (req, res) => {
 })
 
 router.post('/edit', async (req, res) => {
-	await ListItemModel.update(req.body)
+	const {id} = req.body
+	delete req.body.id
+	await ListItem.findByIdAndUpdate(id, req.body)
+	res.redirect('/list')
+})
+
+router.post('/remove', async (req, res) => {
+	console.log('Id--->>', req.body.id)
+	await ListItem.deleteOne({
+		_id: req.body.id
+	})
 	res.redirect('/list')
 })
 

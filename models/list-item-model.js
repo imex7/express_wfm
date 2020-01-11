@@ -1,87 +1,26 @@
-const uuid = require('uuid/v4')
-const path = require('path')
-const fs = require('fs')
+const {Schema, model} = require('mongoose')
 
-class ListItemModel {
-
-	constructor(title, price, img) {
-		this.title = title
-		this.price = price
-		this.img = img
-		this.id = uuid()
+const listItem = new Schema({
+	title: {
+		type: String,
+		required: true
+	},
+	price: {
+		type: Number,
+		required: true
+	},
+	img: String,
+	userId: {
+		type: Schema.Types.ObjectId,
+		ref: 'User'
 	}
+})
 
-	toJSON() {
-		return {
-			title: this.title,
-			price: this.price,
-			img: this.img,
-			id: this.id
-		}
-	}
+listItem.method('toClient', function () {
+	const item = this.toObject()
+	item.id = course._id
+	delete item._id
+	return item
+})
 
-	static async update(item) {
-		const list = await ListItemModel.getAll()
-		const idx = list.findIndex( (c) => {
-			return c.id === item.id
-		})
-		list[idx] = item
-		return new Promise((res, rej) => {
-			fs.writeFile(
-				path.join(__dirname, '..', 'data', 'list-items.json'),
-				JSON.stringify(list),
-				(err, data) => {
-					if (err) {
-						rej(err)
-					} else {
-						res()
-					}
-				}
-			)
-		})
-	}
-
-	async save() {
-		const list = await ListItemModel.getAll()
-		list.push(this.toJSON())
-		return new Promise((res, rej) => {
-			fs.writeFile(
-				path.join(__dirname, '..', 'data', 'list-items.json'),
-				JSON.stringify(list),
-				(err, data) => {
-					if (err) {
-						rej(err)
-					} else {
-						res()
-					}
-				}
-			)
-		})
-		console.log(list)
-	}
-
-	static getAll() {
-		return new Promise((res, rej) => {
-			fs.readFile(
-				path.join(__dirname, '..', 'data', 'list-items.json'), 'utf-8',
-				(err, data) => {
-					if (err) {
-						rej(err)
-					} else {
-						res(JSON.parse(data))
-					}		
-				}
-			)
-		})
-	}
-
-	static async getOne(id) {
-		let list = await ListItemModel.getAll()
-		return list.find((el) => {
-			return el.id === id 
-		})
-	}
-
-}
-
-module.exports = ListItemModel
+module.exports = model('ListItem', listItem)

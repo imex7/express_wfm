@@ -5,8 +5,23 @@ const toCurrency = (val) => {
 	}).format(val)
 }
 
+const toDate = (val) => {
+	return new Intl.DateTimeFormat('ru-RU', {
+		day: '2-digit',
+		month: 'long',
+		year: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit',
+		second: '2-digit'
+	}).format(new Date(val))
+}
+
 document.querySelectorAll(".price").forEach((el) => {
 	el.textContent = toCurrency(el.textContent)
+})
+
+document.querySelectorAll(".date").forEach((el) => {
+	el.textContent = toDate(el.textContent)
 })
 
 const cart = document.querySelector('#cart')
@@ -21,7 +36,7 @@ if (cart) {
 					res.json()
 				)
 			}).then((d) => {
-				console.log(d.price)
+				// console.log(d)
 				if (d.items.length) {
 					const html = d.items.map((el) => {
 						return `
@@ -36,9 +51,7 @@ if (cart) {
 					}).join('')
 					const tbody = cart.querySelector('tbody')
 					tbody.innerHTML = html
-					cart.querySelector('.price').textContent = toCurrency(d.price)
-					console.dir(cart.querySelector('.price'))
-					// console.dir(tbody)
+					cart.querySelector('.price').textContent = toCurrency(d.price_total)
 				} else {
 					cart.innerHTML = "<p>Пусто!!!</p>"
 				}

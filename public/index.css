@@ -2,16 +2,25 @@
 	padding: 0 2rem;
 }
 
+.flex_container {
+	display: flex;
+	flex-direction: row;
+}
+
 .card {
 	background-color: #d7ccc8;
 	border-radius: .5em;
-	/*display: inline-block;*/
+	/* display: inline-block; */
 }
 
 .card-image img {
-	max-width: 300px;
-	height: auto;
+	max-width: 250px; min-height: 160px;
+	/* height: auto; */
 	margin-left: 1em;
+}
+
+.card-content {
+	line-height: 1.2em;
 }
 
 .card-title {

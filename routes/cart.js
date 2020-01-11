@@ -1,31 +1,52 @@
 const router = require('express').Router()
-const CartModel = require('../models/cart-model')
-const ListItemModel = require('../models/list-item-model')
+const ListItem = require('../models/list-item-model')
 
 router.post('/add', async (req, res) => {
     res.removeHeader('X-Powered-By')
     res.setHeader('Date', new Date().toLocaleString())
 
-    const item = await ListItemModel.getOne(req.body.id)
-    await CartModel.add(item)
+    const item = await ListItem.findById(req.body.id)
+    await req.user.addToCart(item)
     res.redirect('/cart')
 })
 
 router.delete('/remove/:id', async (req, res) => {
-    const cart = await CartModel.remove(req.params.id)
-    // console.log(cart)
+    await req.user.removeFromCart(req.params.id)
+    const user = await req.user.populate('cart.items.itemId').execPopulate()
+    const cart_list = user.cart.items.map((el) => {
+        return {
+            ...el.itemId._doc,
+            count: el.count
+        }
+    })
+    const cart_price = cart_list.reduce((total, el) => {
+        return total += el.price * el.count
+    }, 0)
+    const cart = {
+        items: cart_list,
+        price_total: cart_price
+    }
     res.status(200).json(cart)
 
 })
 
 router.get('/', async (req, res) => {
-    const cart = await CartModel.fetch()
-    console.log(cart)
+    const user = await req.user.populate('cart.items.itemId').execPopulate()
+    const cart_list = user.cart.items.map((el) => {
+        return {
+                ...el.itemId._doc,
+                count: el.count
+            }
+    })
+    const cart_price = cart_list.reduce((total, el) => {
+        return total += el.price * el.count
+    }, 0)
+    // console.log(cart_list)
     res.render('cart', {
         isCart: true,
         title: 'Корзина',
-        items: cart.items,
-        price_total: cart.price
+        items: cart_list,
+        price_total: cart_price
     })
 })
 

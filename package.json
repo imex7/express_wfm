@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "express-handlebars": "^3.1.0",
+    "mongoose": "^5.7.12",
     "uuid": "^3.3.3"
   }
 }
