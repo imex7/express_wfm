@@ -1,6 +1,6 @@
 <nav>
 	<div class="nav-wrapper">
-		<a href="#" class="brand-logo">Logo</a>
+		<a href="/" class="brand-logo">Logo</a>
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
 			{{#if isHome}}
 				<li class="active"><a href="/">Home</a></li>
@@ -12,21 +12,34 @@
 			{{else}}
 				<li><a href="/list">List</a></li>
 			{{/if}}
-			{{#if isListAdd}}
+
+			{{#if isAuth}}
+				{{#if isListAdd}}
 				<li class="active"><a href="/list_add">Add</a></li>
-			{{else}}
+				{{else}}
 				<li><a href="/list_add">Add</a></li>
-			{{/if}}
-            {{#if isCart}}
+				{{/if}}
+				{{#if isCart}}
 				<li class="active"><a href="/cart">Cart</a></li>
-			{{else}}
+				{{else}}
 				<li><a href="/cart">Cart</a></li>
-			{{/if}}
-            {{#if isOrder}}
+				{{/if}}
+				{{#if isOrder}}
 				<li class="active"><a href="/orders">Orders</a></li>
-			{{else}}
+				{{else}}
 				<li><a href="/orders">Orders</a></li>
+				{{/if}}
+				<li><a href="/auth/signout">Sign Out</a></li>
+			{{else}}
+				{{#if isLogin}}
+				<li class="active"><a href="/auth/signin#login">Sign In</a></li>
+				{{else}}
+				<li><a href="/auth/signin#login">Sign In</a></li>
+				{{/if}}
 			{{/if}}
+
+
+
 		</ul>
 	</div>
 </nav>

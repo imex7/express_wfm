@@ -29,8 +29,12 @@ if (cart) {
 	cart.addEventListener('click', (e) => {
 		if (e.target.classList.contains("remove")) {
 			let id = e.target.dataset.id
+			let csrf = e.target.dataset.csrf
 			fetch('/cart/remove/'+id, {
-				method: 'delete'
+				method: 'delete',
+				headers: {
+					'X-XSRF-TOKEN': csrf
+				}
 			}).then((res) => {
 				return (
 					res.json()
@@ -44,7 +48,8 @@ if (cart) {
 								<td>${el.title}</td>
 								<td>${el.count}</td>
 								<td>
-									<button class="btn btn-small remove" data-id="${el.id}">Удалить</button>
+									<button class="btn btn-small remove"
+									data-id="${el.id}">Удалить</button>
 								</td>
 							</tr>							
 						`
@@ -59,3 +64,5 @@ if (cart) {
 		}
 	})
 }
+
+M.Tabs.init(document.querySelectorAll('.tabs'));

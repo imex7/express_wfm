@@ -22,14 +22,14 @@
         <span class="helper-text" data-error="Enter correct URL"></span>
     </div>
 
-    <input id="id" name="id"
-           value="{{list_item.id}}"
-           type="hidden">
+    <input type="hidden" id="id" name="id" value="{{list_item.id}}">
+    <input type="hidden" name="_csrf" value="{{csrf}}">
 
     <button class="btn btn-primary">Save</button>
 </form>
 
 <form action="/list/remove" method="post">
+    <input type="hidden" name="_csrf" value="{{csrf}}">
     <input type="hidden" name="id" value="{{list_item.id}}">
     <button type="submit" class="btn red">Delete</button>
 </form>

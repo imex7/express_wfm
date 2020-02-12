@@ -1,13 +1,14 @@
 const router = require('express').Router()
 const ListItem = require('../models/list-item-model')
+const guard = require('../middleware/guard')
 
-router.get('/', (req, res) => {
+router.get('/', guard, (req, res) => {
 	res.render('list-add', {
 		isListAdd: true
 	})
 })
 
-router.post('/', async (req, res) => {
+router.post('/', guard, async (req, res) => {
 	let {title, price, img, user} = req.body
 	console.log(req.body)
 	const list_item = new ListItem({

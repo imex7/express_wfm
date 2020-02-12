@@ -15,11 +15,15 @@
 			</div>
 			<div class="card-action mycardaction">
 				<a href="/list/{{id}}" target="_blank" class="btn red lighten-2">Открыть</a>
+            
+                {{#if @root.isAuth}}
 				<a href="/list/{{id}}/edit?allow=true" class="btn light-green lighten-2">Редактировать</a>
-            <form action="/cart/add" method="post">
-                <input type="hidden" name="id" value="{{id}}">
-                <button type="submit" class="btn btn-primary">Купить</button>
-            </form>
+                <form action="/cart/add" method="post">
+                    <input type="hidden" name="_csrf" value="{{@root.csrf}}">
+                    <input type="hidden" name="id" value="{{id}}">
+                    <button type="submit" class="btn btn-primary">Купить</button>
+                </form>
+                {{/if}}
 			</div>
         </div>
 	{{!-- </div> --}}

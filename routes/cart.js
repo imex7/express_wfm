@@ -1,7 +1,9 @@
 const router = require('express').Router()
 const ListItem = require('../models/list-item-model')
+const guard = require('../middleware/guard')
 
-router.post('/add', async (req, res) => {
+
+router.post('/add', guard, async (req, res) => {
     res.removeHeader('X-Powered-By')
     res.setHeader('Date', new Date().toLocaleString())
 
@@ -10,7 +12,7 @@ router.post('/add', async (req, res) => {
     res.redirect('/cart')
 })
 
-router.delete('/remove/:id', async (req, res) => {
+router.delete('/remove/:id', guard, async (req, res) => {
     await req.user.removeFromCart(req.params.id)
     const user = await req.user.populate('cart.items.itemId').execPopulate()
     const cart_list = user.cart.items.map((el) => {
@@ -30,7 +32,7 @@ router.delete('/remove/:id', async (req, res) => {
 
 })
 
-router.get('/', async (req, res) => {
+router.get('/', guard, async (req, res) => {
     const user = await req.user.populate('cart.items.itemId').execPopulate()
     const cart_list = user.cart.items.map((el) => {
         return {

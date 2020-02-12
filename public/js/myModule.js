@@ -1,3 +1,7 @@
+let boo = document.querySelector(".user").textContent
+console.log(boo);
+
+
 document.querySelector('#t_but').addEventListener('click', () => {
 	promise.then((d) => {
 		// alert(d)
@@ -17,3 +21,5 @@ let promise = new Promise((res, rej) => {
 let promise2 = async () => {
 	return "LLLLLL"
 }
+
+// alert('LOLOLOLO')

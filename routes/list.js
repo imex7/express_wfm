@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const ListItem = require('../models/list-item-model')
+const guard = require('../middleware/guard')
 
 router.get('/', async (req, res) => {
 	res.removeHeader('X-Powered-By')
@@ -21,7 +22,7 @@ router.get('/:id', async (req, res) => {
 	})
 })
 
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', guard, async (req, res) => {
 	const list_item = await ListItem.findByIdAndUpdate(req.params.id)
 	if (!req.query.allow) {
 		return res.redirect('/')
@@ -32,14 +33,14 @@ router.get('/:id/edit', async (req, res) => {
 	}
 })
 
-router.post('/edit', async (req, res) => {
+router.post('/edit', guard, async (req, res) => {
 	const {id} = req.body
 	delete req.body.id
 	await ListItem.findByIdAndUpdate(id, req.body)
 	res.redirect('/list')
 })
 
-router.post('/remove', async (req, res) => {
+router.post('/remove', guard, async (req, res) => {
 	console.log('Id--->>', req.body.id)
 	await ListItem.deleteOne({
 		_id: req.body.id
