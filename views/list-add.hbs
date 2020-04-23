@@ -1,17 +1,24 @@
 <h2>Add</h2>
+
+{{#if error}}
+    <p class="alert">
+        {{error}}
+    </p>
+{{/if}}
+
 <form action="/list_add" method="post">
 	<div class="input-field">
-		<input id="title" name="title" type="text" class="validate" required>
+		<input id="title" name="title" type="text" class="validate" required value="{{data.title}}">
 		<label for="title">Title</label>
 		<span class="helper-text" data-error="Enter a title"></span>
 	</div>
 	<div class="input-field">
-		<input id="price" name="price" type="number" class="validate" required min="1">
+		<input id="price" name="price" type="number" class="validate" required min="1" value="{{data.price}}">
 		<label for="price">Price</label>
 		<span class="helper-text" data-error="Enter a price"></span>
 	</div>
 	<div class="input-field">
-		<input id="img" name="img" type="text" class="validate" required>
+		<input id="img" name="img" type="text" class="validate" required value="{{data.img}}">
 		<label for="img">URL of image</label>
 		<span class="helper-text" data-error="Enter correct URL"></span>
 	</div>

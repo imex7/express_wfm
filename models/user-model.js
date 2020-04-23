@@ -10,6 +10,7 @@ const user = new Schema({
 		type: String,
 		required: false
 	},
+	avatarUrl: String,
 	cart: {
 		items: [
 			{

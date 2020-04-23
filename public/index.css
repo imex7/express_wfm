@@ -10,6 +10,7 @@
 .card {
 	background-color: #d7ccc8;
 	border-radius: .5em;
+	padding: 10px;
 	/* display: inline-block; */
 }
 
@@ -71,4 +72,8 @@
 	padding: 20px;
 	background-color: rgb(241, 123, 123);
 	border-radius: 5px;
+}
+
+.avatar {
+	max-width: 350px;
 }
